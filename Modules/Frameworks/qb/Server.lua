@@ -8,7 +8,7 @@ function B1.RegisterServerCallback(name, cb)
     QBCore.Functions.CreateCallback(name, cb)
 end
 
-function B1.GetPlayerDataByID(playerId)
+function B1.GetPlayerDataByIdentifier(playerId)
     local rawPlayerData = QBCore.Functions.GetPlayerData(playerId)
 
     return {

@@ -19,6 +19,10 @@ function B1.GetPlayerData()
     }
 end
 
+function B1.IsPlayerLoaded()
+    return QBCore.Functions.GetPlayerData() ~= nil
+end
+
 function B1.GetPlayerIdentifier()
     return B1.GetPlayerData().identifier
 end
@@ -77,5 +81,8 @@ function B1.TriggerServerCallback(name, cb, ...)
 end
 
 function B1.IsPlayerDead()
-    return QBCore.Functions.GetPlayerData().metadata["isdead"]
+    return {
+        isDead = QBCore.Functions.GetPlayerData().metadata["isdead"],
+        islaststand = QBCore.Functions.GetPlayerData().metadata["islaststand"]
+    }
 end
