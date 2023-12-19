@@ -16,3 +16,9 @@ server_scripts {
 shared_scripts {
     'shared/*.lua',
 }
+
+files {
+    './Modules/Frameworks/*/Client.lua',
+    './Modules/Frameworks/*/Server.lua',
+    './Modules/Frameworks/*/Shared.lua',
+}
