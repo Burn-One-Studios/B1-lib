@@ -25,7 +25,7 @@ function B1.GetPlayerDataByIdentifier(playerId)
         }
     else
         -- Player is offline, fetch their data from the database
-        local result = MySQL.Sync.fetchAll('SELECT * FROM users WHERE identifier = @identifier', {
+        local result = MySQL.Sync.fetchAll('SELECT identifier, job, job_grade, accounts, bank, metadata FROM users WHERE identifier = @identifier', {
             ['@identifier'] = playerId
         })
 
