@@ -1,9 +1,5 @@
 QBCore = exports['qb-core']:getCoreObject()
 
-if GetResourceState('qb-core') == 'started' then
-    LoadResourceFile(GetCurrentResourceName(), "Modules/Frameworks/qb/Server.lua")
-end
-
 function B1.GetPlayerData()
     local rawPlayerData = QBCore.Functions.GetPlayerData()
 

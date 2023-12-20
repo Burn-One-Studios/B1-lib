@@ -1,9 +1,5 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-if GetResourceState('es_extended') == 'started' then
-    LoadResourceFile(GetCurrentResourceName(), "Modules/Frameworks/esx/Server.lua")
-end
-
 function B1.RegisterServerCallback(name, cb)
     ESX.RegisterServerCallback(name, cb)
 end

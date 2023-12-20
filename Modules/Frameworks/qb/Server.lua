@@ -1,9 +1,5 @@
 QBCore = exports["qb-core"]:getCoreObject()
 
-if GetResourceState('qb-core') == 'started' then
-    LoadResourceFile(GetCurrentResourceName(), "Modules/Frameworks/qb/Client.lua")
-end
-
 function B1.RegisterServerCallback(name, cb)
     QBCore.Functions.CreateCallback(name, cb)
 end

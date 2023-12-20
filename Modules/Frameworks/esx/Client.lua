@@ -1,9 +1,5 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-if GetResourceState('es_extended') == 'started' then
-    LoadResourceFile(GetCurrentResourceName(), "Modules/Frameworks/esx/Client.lua")
-end
-
 function B1.GetPlayerData()
     return {
         identifier = rawPlayerData.identifier,
