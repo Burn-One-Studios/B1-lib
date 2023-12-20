@@ -19,6 +19,6 @@ shared_scripts {
 }
 
 files {
-    './Modules/Frameworks/*/Client.lua',
-    './Modules/Frameworks/*/Server.lua',
+    './Modules/Frameworks/**/Client.lua',
+    './Modules/Frameworks/**/Server.lua',
 }
