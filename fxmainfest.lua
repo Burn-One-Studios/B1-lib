@@ -7,18 +7,20 @@ description 'A libary of functions for FiveM'
 
 client_scripts {
     'client/*.lua',
+    '/Modules/Frameworks/**/Client.lua',
 }
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'server/*.lua',
+    '/Modules/Frameworks/**/Server.lua',
 }
 
 shared_scripts {
     'shared/*.lua',
+    '/Modules/Frameworks/init.lua',
 }
 
 files {
-    './Modules/Frameworks/**/Client.lua',
-    './Modules/Frameworks/**/Server.lua',
+    '/Modules/Frameworks/init.lua',
 }

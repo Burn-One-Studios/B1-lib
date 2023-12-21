@@ -9,7 +9,11 @@ function B1.GetPlayerData()
         },
         money = rawPlayerData.accounts,
         bank = rawPlayerData.bank,
-        metadata = rawPlayerData.metadata
+        metadata = rawPlayerData.metadata,
+        charinfo = {
+            firstname = ESX.PlayerData.firstname,
+            lastname = ESX.PlayerData.lastname,
+        }
     }
 end
 

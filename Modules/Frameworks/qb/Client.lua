@@ -11,7 +11,8 @@ function B1.GetPlayerData()
         },
         money = rawPlayerData.money["cash"],
         bank = rawPlayerData.money["bank"],
-        metadata = rawPlayerData.metadata
+        metadata = rawPlayerData.metadata,
+        charinfo = rawPlayerData.charinfo
     }
 end
 
