@@ -35,4 +35,4 @@ function B1.checkVersion(repository)
 	end)
 end
 
-B1.checkVersion('B1-labo/B1-lib')
+B1.checkVersion('Burn-One-Studios/B1-lib')

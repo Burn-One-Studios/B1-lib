@@ -34,13 +34,21 @@ function B1.log(type, message)
 end
 
 function B1.randomStr(length)
+    local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     if length <= 0 then return '' end
-    return QBShared.RandomStr(length - 1) .. StringCharset[math.random(1, #StringCharset)]
+    local str = ""
+    for i = 1, length do
+        local rand = math.random(#charset)
+        str = str .. string.sub(charset, rand, rand)
+    end
+    return str
 end
 
 function B1.randomInt(length)
     if length <= 0 then return '' end
-    return QBShared.RandomInt(length - 1) .. NumberCharset[math.random(1, #NumberCharset)]
+    local min = 10^(length-1)
+    local max = 10^length - 1
+    return math.random(min, max)
 end
 
 function B1.splitStr(str, delimiter)
