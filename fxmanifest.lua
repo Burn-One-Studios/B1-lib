@@ -1,24 +1,39 @@
-fx_version   'cerulean'
-lua54        'yes'
+fx_version 'cerulean'
 game 'gta5'
-author 'Burn One Studios'
+use_experimental_fxv2_oal 'yes'
+lua54 'yes'
 
-description 'A libary of functions for FiveM'
+author 'B1 Lib'
+description 'A library for FiveM developers to make their life easier when using QBCore & ESX.'
+version '1.0.0'
+
+dependencies {
+	'/server:5848',
+    '/onesync',
+}
+
+files {
+    'init.lua',
+    'imports/**/client.lua',
+    'imports/**/shared.lua',
+}
+
+shared_script 'modules/init.lua'
+shared_scripts {
+    '@es_extended/imports.lua',
+
+    'modules/**/shared.lua',
+}
 
 client_scripts {
-    'client/*.lua',
+    'imports/callbacks/client.lua',
+    'modules/**/client.lua',
+    'modules/**/client/*.lua'
 }
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'server/*.lua',
-}
-
-shared_scripts {
-    'shared/*.lua',
-    '/Modules/Frameworks/init.lua',
-}
-
-files {
-    '/Modules/Frameworks/**/*.lua',
+    'imports/callbacks/server.lua',
+    'modules/**/server.lua',
+    'modules/**/server/*.lua',
 }
