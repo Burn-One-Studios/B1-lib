@@ -5,6 +5,8 @@ for i = 48, 57 do NumberCharset[#NumberCharset + 1] = string.char(i) end
 for i = 65, 90 do StringCharset[#StringCharset + 1] = string.char(i) end
 for i = 97, 122 do StringCharset[#StringCharset + 1] = string.char(i) end
 
+---@param type string success | warning | error | inform
+---@param message string The message to log
 function B1.log(type, message)
     local callingResource = GetInvokingResource()
     local printTypes = {
@@ -33,6 +35,7 @@ function B1.log(type, message)
     printTypes[type].printer(finalMessage)
 end
 
+---@param length number The length of the string to generate
 function B1.randomStr(length)
     local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     if length <= 0 then return '' end
@@ -44,6 +47,7 @@ function B1.randomStr(length)
     return str
 end
 
+---@param length number The length of the number to generate
 function B1.randomInt(length)
     if length <= 0 then return '' end
     local min = 10^(length-1)
@@ -51,6 +55,8 @@ function B1.randomInt(length)
     return math.random(min, max)
 end
 
+---@param str string The string to split
+---@param delimiter string The delimiter to split the string by
 function B1.splitStr(str, delimiter)
     local result = {}
     local from = 1
@@ -64,30 +70,37 @@ function B1.splitStr(str, delimiter)
     return result
 end
 
+---@param value string The string to trim
 function B1.trim(value)
     if not value then return nil end
     return (string.gsub(value, '^%s*(.-)%s*$', '%1'))
 end
 
+---@param value string The string to capitalize
 function B1.firstToUpper(value)
     if not value then return nil end
     return (value:gsub("^%l", string.upper))
 end
 
+---@param value number The number to round
+---@param numDecimalPlaces number The number of decimal places to round to
 function B1.round(value, numDecimalPlaces)
     if not numDecimalPlaces then return math.floor(value + 0.5) end
     local power = 10 ^ numDecimalPlaces
     return math.floor((value * power) + 0.5) / (power)
 end
 
+---@return string 'esx' | 'qbcore'
 function B1.getCoreName()
     return B1.core
 end
 
+---@return string 'qb' | 'ox' | 'esx'
 function B1.getInventoryName()
     return B1.inventory
 end
 
+---@return table -- The CoreObject
 function B1.getCoreObject()
     return CoreObject
 end

@@ -1,3 +1,7 @@
+---@param source number The player to spawn the vehicle for
+---@param model string|number The model name or hash of the vehicle to spawn
+---@param coords table The Vector3 to spawn the vehicle at
+---@param warp boolean Whether or not the player should be warped into the vehicle
 function B1.spawnVehicle(source, model, coords, warp)
     local ped = GetPlayerPed(source)
     model = type(model) == 'string' and joaat(model) or model
@@ -14,6 +18,7 @@ function B1.spawnVehicle(source, model, coords, warp)
     return veh
 end
 
+---@param netId number The network ID of the vehicle to delete
 function B1.getPlate(netId)
     local vehicle = NetworkGetEntityFromNetworkId(netId)
     if vehicle == 0 then return end
@@ -33,6 +38,7 @@ if B1.core == 'esx' then
     end)
 end
 
+---@param model string|number The model name or hash of the vehicle to grab the label of
 function B1.getVehicleLabel(model)
     if B1.core == 'esx' then
         return ESXVehicles[model].label

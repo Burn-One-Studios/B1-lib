@@ -1,3 +1,8 @@
+---@param model string  The model name or hash of the vehicle to spawn
+---@param cb function   The callback function to execute after the vehicle has been spawned
+---@param coords table  The Vector3 to spawn the vehicle at
+---@param isnetworked boolean Whether or not the vehicle should be networked
+---@param teleportInto boolean Whether or not the player should be teleported into the vehicle
 function B1.spawnVehicle(model, cb, coords, isnetworked, teleportInto)
     local ped = PlayerPedId()
     model = type(model) == 'string' and GetHashKey(model) or model
@@ -21,11 +26,14 @@ function B1.spawnVehicle(model, cb, coords, isnetworked, teleportInto)
     if cb then cb(veh) end
 end
 
+---@param vehicle string|number The vehicle to delete
 function B1.getPlate(vehicle)
     if vehicle == 0 then return end
     return B1.trim(GetVehicleNumberPlateText(vehicle))
 end
 
+---@param model string|number The model name or hash of the vehicle to grab the label of
+---@return string The label of the vehicle
 function B1.getVehicleLabel(model)
     local label = B1.callback.await('B1-lib:getVehicleLabel', false, model)
     return label

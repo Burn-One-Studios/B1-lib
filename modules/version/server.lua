@@ -1,3 +1,4 @@
+---@param repository string The repository to check for updates
 function B1.checkVersion(repository)
 	local resource = GetInvokingResource() or GetCurrentResourceName()
 
