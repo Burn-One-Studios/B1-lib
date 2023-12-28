@@ -136,21 +136,46 @@ function B1.getLicence(licenseType)
 end
 
 local notifyTypeMap = {
-    ["info"] = { esx = "info", qb = "primary" },
-    ["success"] = { esx = "success", qb = "success" },
-    ["error"] = { esx = "error", qb = "error" },
-    [1] = { esx = "info", qb = "primary" },
-    [2] = { esx = "success", qb = "success" },
-    [3] = { esx = "error", qb = "error" }
+    ["info"] = { esx = "info", qb = "primary", oxlib = "inform" },
+    ["success"] = { esx = "success", qb = "success", oxlib = "success" },
+    ["error"] = { esx = "error", qb = "error", oxlib = "error" },
+    ["warning"] = { esx = "info", qb = "primary", oxlib = "warning" },
+    [1] = { esx = "info", qb = "primary", oxlib = "inform" },
+    [2] = { esx = "success", qb = "success", oxlib = "success" },
+    [3] = { esx = "error", qb = "error", oxlib = "error" }
 }
 
 function B1.notify(message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end
     local notifyType = notifyTypeMap[type]
-    if B1.core == 'qb-core' then
+    if Config.Notify == 'oxlib' then
+        if lib then
+            lib.notify({
+                title = '',
+                description = message,
+                type = notifyType.oxlib
+            })
+        else
+            print("Warning: Oxlib is not running but Oxlib notifications are configured. Falling back to core detected notify.")
+            B1.notify(message, type, length)
+        end
+    elseif B1.core == 'qb-core' then
         TriggerEvent('QBCore:Notify', message, notifyType.qb, length)
     elseif B1.core == 'esx' then
         TriggerEvent('esx:showNotification', message, notifyType.esx, length)
     end
 end
+
+RegisterNetEvent('B1:OxlibNotify')
+AddEventHandler('B1:OxlibNotify', function(message, type)
+    if lib then
+        lib.notify({
+            title = '',
+            description = message,
+            type = type
+        })
+    else
+        print("Warning: Oxlib is not running but Oxlib notifications are configured.")
+    end
+end)
