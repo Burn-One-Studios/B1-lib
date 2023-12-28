@@ -40,6 +40,7 @@ function B1.getPlayerData()
     }
     end
 end
+
 function B1.getCitizenId()
     local citizenid = B1.callback.await('B1-lib:getCitizenid', false)
     return citizenid
