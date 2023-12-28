@@ -239,7 +239,7 @@ local notifyTypeMap = {
 
 ---@param source number The ID of the client to send the notification to.
 ---@param message string The message to be displayed in the notification.
----@param type string The type of the notification. Can be 'info' (default, index 1), 'success' (index 2), 'error' (index 3), or 'warning'.
+---@param type string | number 'success' (1), 'warning' (2), 'error' (3), 'info' (4)
 ---@param length number The duration of the notification in milliseconds. Default is 5000.
 function B1.notify(source, message, type, length)
     if not type then type = 'info' end
