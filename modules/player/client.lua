@@ -149,7 +149,7 @@ function B1.notify(message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end
     local notifyType = notifyTypeMap[type]
-    if Config.Notify == 'oxlib' then
+    if Config.UseOxNotify then
         if lib then
             lib.notify({
                 description = message,

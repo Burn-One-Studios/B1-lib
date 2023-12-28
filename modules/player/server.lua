@@ -215,7 +215,7 @@ function B1.notify(source, message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end
     local notifyType = notifyTypeMap[type]
-    if Config.Notify == 'oxlib' then
+    if Config.UseOxNotify then
         TriggerClientEvent('B1:OxlibNotify', source, message, notifyType.oxlib)
     elseif B1.core == 'qb-core' then
         TriggerClientEvent('QBCore:Notify', source, message, notifyType.qb, length)
