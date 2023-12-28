@@ -179,6 +179,6 @@ AddEventHandler('B1:OxlibNotify', function(message, ttype, length)
             duration = length
         })
     else
-        B1.notify(message, type, length)
+        B1.notify(message, ttype, length)
     end
 end)
