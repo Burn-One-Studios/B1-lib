@@ -157,7 +157,11 @@ function B1.notify(message, type, length)
             })
         else
             print("Warning: Oxlib is not running but Oxlib notifications are configured. Falling back to core detected notify.")
-            B1.notify(message, type, length)
+            if B1.core == 'qb-core' then
+                TriggerEvent('QBCore:Notify', message, notifyType.qb, length)
+            elseif B1.core == 'esx' then
+                TriggerEvent('esx:showNotification', message, notifyType.esx, length)
+            end
         end
     elseif B1.core == 'qb-core' then
         TriggerEvent('QBCore:Notify', message, notifyType.qb, length)
@@ -167,13 +171,14 @@ function B1.notify(message, type, length)
 end
 
 RegisterNetEvent('B1:OxlibNotify')
-AddEventHandler('B1:OxlibNotify', function(message, type)
+AddEventHandler('B1:OxlibNotify', function(message, type, length)
     if lib then
         lib.notify({
             description = message,
-            type = type
+            type = type,
+            duration = length
         })
     else
-        print("Warning: Oxlib is not running but Oxlib notifications are configured.")
+        B1.notify(message, type, length)
     end
 end)
