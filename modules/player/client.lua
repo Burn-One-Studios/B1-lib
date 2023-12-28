@@ -98,6 +98,8 @@ function B1.getPlayerGang()
     return gang
 end
 
+---comment
+---@param type string
 function B1.getPlayerMoney(type)
     local playerData = B1.getCorePlayerData()
     if B1.core == 'qb-core' then
@@ -131,6 +133,7 @@ function B1.getLicences()
     return licenses
 end
 
+---@param licenseType string
 function B1.getLicence(licenseType)
     local license = B1.callback.await('B1-lib:getlicence', false, licenseType)
     return license
@@ -146,6 +149,9 @@ local notifyTypeMap = {
     [3] = { esx = "error", qb = "error", oxlib = "error" }
 }
 
+---@param message string
+---@param type string
+---@param length number
 function B1.notify(message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end

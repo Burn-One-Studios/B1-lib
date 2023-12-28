@@ -1,3 +1,6 @@
+---@param need string
+---@param type string
+---@param amount number
 function B1.updateNeed(need, type, amount)
     local source = source
     if B1.core == 'qb-core' then

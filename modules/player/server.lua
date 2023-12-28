@@ -1,3 +1,5 @@
+---@param source number
+---@return table player
 function B1.getPlayer(source)
     if B1.core == 'qb-core' then
         return CoreObject.Functions.GetPlayer(source)
@@ -5,6 +7,7 @@ function B1.getPlayer(source)
         return CoreObject.GetPlayerFromId(source)
     end
 end
+
 
 function B1.getPlayers()
     if B1.core == 'qb-core' then
@@ -15,6 +18,10 @@ function B1.getPlayers()
 end
 
 -- Money
+---@param source number
+---@param moneyType string
+---@param amount number
+---@param reason string
 function B1.addMoney(source, moneyType, amount, reason)
     if not reason then reason = 'unknown' end
     local Player = B1.getPlayer(source)
@@ -46,6 +53,10 @@ function B1.addMoney(source, moneyType, amount, reason)
     return addedMoney
 end
 
+---@param source number
+---@param moneyType string
+---@param amount number
+---@param reason string
 function B1.removeMoney(source, moneyType, amount, reason)
     if not reason then reason = 'unknown' end
     local Player = B1.getPlayer(source)
@@ -77,6 +88,8 @@ function B1.removeMoney(source, moneyType, amount, reason)
     return removedMoney
 end
 
+---@param source any
+---@param moneyType any
 function B1.getMoney(source, moneyType)
     local Player = B1.getPlayer(source)
     local types = {
@@ -100,6 +113,9 @@ function B1.getMoney(source, moneyType)
     return false
 end
 
+---@param source any
+---@param moneyType any
+---@param amount any
 function B1.setMoney(source, moneyType, amount)
     if not reason then reason = 'unknown' end
     local Player = B1.getPlayer(source)
@@ -123,6 +139,7 @@ function B1.setMoney(source, moneyType, amount)
     end
 end
 
+---@param source number
 function B1.getLicences(source)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -135,6 +152,8 @@ function B1.getLicences(source)
     end
 end
 
+---@param source number
+---@param licenseType string
 function B1.getLicence(source, licenseType)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -147,6 +166,8 @@ function B1.getLicence(source, licenseType)
     end
 end
 
+---@param source number
+---@param licenseType string
 function B1.addLicence(source, licenseType)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -162,6 +183,8 @@ function B1.addLicence(source, licenseType)
     return false
 end
 
+---@param source number
+---@param licenseType string
 function B1.removeLicence(source, licenseType)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -177,6 +200,7 @@ function B1.removeLicence(source, licenseType)
     return false
 end
 
+---@param source number
 function B1.getCitizenId(source)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -189,6 +213,7 @@ function B1.getCitizenId(source)
     return false
 end
 
+---@param source number
 function B1.getPlayerName(source)
     local Player = B1.getPlayer(source)
     if B1.core == 'qb-core' then
@@ -211,6 +236,10 @@ local notifyTypeMap = {
     [3] = { esx = "error", qb = "error", oxlib = "error" }
 }
 
+---@param source number
+---@param message string
+---@param type string
+---@param length number
 function B1.notify(source, message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end
