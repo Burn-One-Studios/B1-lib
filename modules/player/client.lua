@@ -134,3 +134,29 @@ function B1.getLicence(licenseType)
     local license = B1.callback.await('B1-lib:getlicence', false, licenseType)
     return license
 end
+
+function B1.notify(message, type, length)
+    if B1.core == 'qb-core' then
+        if type == 'error' then
+            type = 'error'
+        elseif type == 'success' then
+            type = 'success'
+        elseif type == 'inform' then
+            type = 'inform'
+        else
+            type = 'inform'
+        end
+        TriggerEvent('QBCore:Notify', message, type, length)
+    elseif B1.core == 'esx' then
+        if type == 'error' then
+            type = 'error'
+        elseif type == 'success' then
+            type = 'success'
+        elseif type == 'inform' then
+            type = 'inform'
+        else
+            type = 'inform'
+        end
+        TriggerEvent('esx:showNotification', message, type, length)
+    end
+end
