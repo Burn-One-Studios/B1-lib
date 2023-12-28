@@ -171,11 +171,11 @@ function B1.notify(message, type, length)
 end
 
 RegisterNetEvent('B1:OxlibNotify')
-AddEventHandler('B1:OxlibNotify', function(message, type, length)
+AddEventHandler('B1:OxlibNotify', function(message, ttype, length)
     if lib then
         lib.notify({
             description = message,
-            type = type,
+            type = ttype,
             duration = length
         })
     else
