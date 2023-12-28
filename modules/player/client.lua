@@ -135,28 +135,22 @@ function B1.getLicence(licenseType)
     return license
 end
 
+local notifyTypeMap = {
+    ["info"] = { esx = "info", qb = "primary" },
+    ["success"] = { esx = "success", qb = "success" },
+    ["error"] = { esx = "error", qb = "error" },
+    [1] = { esx = "info", qb = "primary" },
+    [2] = { esx = "success", qb = "success" },
+    [3] = { esx = "error", qb = "error" }
+}
+
 function B1.notify(message, type, length)
+    if not type then type = 'info' end
+    if not length then length = 5000 end
+    local notifyType = notifyTypeMap[type]
     if B1.core == 'qb-core' then
-        if type == 'error' then
-            type = 'error'
-        elseif type == 'success' then
-            type = 'success'
-        elseif type == 'inform' then
-            type = 'inform'
-        else
-            type = 'inform'
-        end
-        TriggerEvent('QBCore:Notify', message, type, length)
+        TriggerEvent('QBCore:Notify', message, notifyType.qb, length)
     elseif B1.core == 'esx' then
-        if type == 'error' then
-            type = 'error'
-        elseif type == 'success' then
-            type = 'success'
-        elseif type == 'inform' then
-            type = 'inform'
-        else
-            type = 'inform'
-        end
-        TriggerEvent('esx:showNotification', message, type, length)
+        TriggerEvent('esx:showNotification', message, notifyType.esx, length)
     end
 end

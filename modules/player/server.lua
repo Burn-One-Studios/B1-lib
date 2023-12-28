@@ -201,15 +201,26 @@ function B1.getPlayerName(source)
     return false
 end
 
+local notifyTypeMap = {
+    ["info"] = { esx = "info", qb = "primary" },
+    ["success"] = { esx = "success", qb = "success" },
+    ["error"] = { esx = "error", qb = "error" },
+    [1] = { esx = "info", qb = "primary" },
+    [2] = { esx = "success", qb = "success" },
+    [3] = { esx = "error", qb = "error" }
+}
+
 function B1.notify(source, message, type, length)
-    if not type then type = 'inform' end
+    if not type then type = 'info' end
     if not length then length = 5000 end
+    local notifyType = notifyTypeMap[type]
     if B1.core == 'qb-core' then
-        TriggerClientEvent('QBCore:Notify', source, message, type, length)
+        TriggerClientEvent('QBCore:Notify', source, message, notifyType.qb, length)
     elseif B1.core == 'esx' then
-        TriggerClientEvent('esx:showNotification', source, message)
+        TriggerClientEvent('esx:showNotification', source, message, notifyType.esx, length)
     end
 end
+
 
 B1.callback.register('B1-lib:getPlayerName', function(source)
     return B1.getPlayerName(source)
