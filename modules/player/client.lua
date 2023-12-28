@@ -149,9 +149,9 @@ local notifyTypeMap = {
     [3] = { esx = "error", qb = "error", oxlib = "error" }
 }
 
----@param message string
----@param type string
----@param length number
+---@param message string The message to be displayed in the notification.
+---@param type string The type of the notification. Can be 'info' (default, index 1), 'success' (index 2), 'error' (index 3), or 'warning'.
+---@param length number The duration of the notification in milliseconds. Default is 5000.
 function B1.notify(message, type, length)
     if not type then type = 'info' end
     if not length then length = 5000 end

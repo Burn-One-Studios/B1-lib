@@ -5,32 +5,47 @@ for i = 48, 57 do NumberCharset[#NumberCharset + 1] = string.char(i) end
 for i = 65, 90 do StringCharset[#StringCharset + 1] = string.char(i) end
 for i = 97, 122 do StringCharset[#StringCharset + 1] = string.char(i) end
 
----@param type string success | warning | error | inform
----@param message string The message to log
+---@param type string | number 'success' (1), 'warning' (2), 'error' (3), 'info' (4)
+---@param message string The message to log.
 function B1.log(type, message)
     local callingResource = GetInvokingResource()
     local printTypes = {
-        ['success'] = {
+        [1] = {
+            name = 'success',
             color = '^2',
             label = ('%s:SUCCESS'):format(callingResource),
             printer = function(content) print(content) end,
         },
-        ['warning'] = {
+        [2] = {
+            name = 'warning',
             color = '^3',
             label = ('%s:WARN'):format(callingResource),
             printer = function(content) print(content) end,
         },
-        ['error'] = {
+        [3] = {
+            name = 'error',
             color = '^1',
             label = ('%s:ERROR'):format(callingResource),
             printer = function(content) error(content) end,
         },
-        ['inform'] = {
+        [4] = {
+            name = 'info',
             color = '^5',
-            label = ('%s:INFORM'):format(callingResource),
+            label = ('%s:INFO'):format(callingResource),
             printer = function(content) print(content) end,
         },
     }
+
+    -- If type is a string, find the corresponding index
+    if type(type) == 'string' then
+        for index, printType in ipairs(printTypes) do
+            if printType.name == type then
+                type = index
+                break
+            end
+        end
+    end
+
     local finalMessage = '[' .. printTypes[type].label .. ']' .. printTypes[type].color .. message .. ' ^0'
     printTypes[type].printer(finalMessage)
 end
