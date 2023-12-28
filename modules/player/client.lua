@@ -152,7 +152,6 @@ function B1.notify(message, type, length)
     if Config.Notify == 'oxlib' then
         if lib then
             lib.notify({
-                title = '',
                 description = message,
                 type = notifyType.oxlib
             })
@@ -171,7 +170,6 @@ RegisterNetEvent('B1:OxlibNotify')
 AddEventHandler('B1:OxlibNotify', function(message, type)
     if lib then
         lib.notify({
-            title = '',
             description = message,
             type = type
         })
