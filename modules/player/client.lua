@@ -146,11 +146,12 @@ local notifyTypeMap = {
     ["warning"] = { esx = "info", qb = "primary", oxlib = "warning" },
     [1] = { esx = "info", qb = "primary", oxlib = "inform" },
     [2] = { esx = "success", qb = "success", oxlib = "success" },
-    [3] = { esx = "error", qb = "error", oxlib = "error" }
+    [3] = { esx = "error", qb = "error", oxlib = "error" },
+    [4] = { esx = "info", qb = "primary", oxlib = "warning" }
 }
 
 ---@param message string The message to be displayed in the notification.
----@param type string | number 'success' (1), 'warning' (2), 'error' (3), 'info' (4)
+---@param type string| number 'info' (1), 'success' (2), 'error' (3), 'warning' (4)
 ---@param length number The duration of the notification in milliseconds. Default is 5000.
 function B1.notify(message, type, length)
     if not type then type = 'info' end
