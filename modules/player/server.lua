@@ -1,6 +1,5 @@
 ---@param source number
----@return table player
-function B1.getPlayer(source)
+function B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         return CoreObject.Functions.GetPlayer(source)
     elseif B1.core == 'esx' then
@@ -8,6 +7,76 @@ function B1.getPlayer(source)
     end
 end
 
+function B1.getPlayerByIdentifier(identifier)
+    if B1.core == 'qb-core' then
+        local rawPlayerData = CoreObject.Functions.GetPlayerByCitizenId(identifier)
+
+        return {
+            identifier = rawPlayerData.citizenid,
+            job = {
+                name = rawPlayerData.job.name,
+                grade = rawPlayerData.job.grade
+            },
+            money = rawPlayerData.money["cash"],
+            bank = rawPlayerData.money["bank"],
+            metadata = rawPlayerData.metadata
+        }
+    elseif B1.core == 'esx' then
+        local rawPlayerData = CoreObject.GetPlayerFromIdentifier(identifier)
+
+        if rawPlayerData then
+            -- Player is online, return their data
+            return {
+                identifier = rawPlayerData.identifier,
+                job = {
+                    name = rawPlayerData.job.name,
+                    grade = rawPlayerData.job.grade
+                },
+                money = rawPlayerData.accounts,
+                bank = rawPlayerData.bank,
+                metadata = rawPlayerData.metadata
+            }
+        end
+    end
+end
+
+function B1.getOfflinePlayerByIdentifier(identifier)
+    if B1.core == 'qb-core' then
+        local rawPlayerData = CoreObject.Functions.GetOfflinePlayerByCitizenId(identifier)
+
+        return {
+            identifier = rawPlayerData.citizenid,
+            job = {
+                name = rawPlayerData.job.name,
+                grade = rawPlayerData.job.grade
+            },
+            money = rawPlayerData.money["cash"],
+            bank = rawPlayerData.money["bank"],
+            metadata = rawPlayerData.metadata
+        }
+    elseif B1.core == 'esx' then
+        local result = MySQL.Sync.fetchAll('SELECT identifier, job, job_grade, accounts, bank, metadata FROM users WHERE identifier = @identifier', {
+            ['@identifier'] = identifier
+        })
+
+        if result and result[1] then
+            -- Convert the result to the desired format
+            return {
+                identifier = result[1].identifier,
+                job = {
+                    name = result[1].job,
+                    grade = result[1].job_grade
+                },
+                money = json.decode(result[1].accounts),
+                bank = result[1].bank,
+                metadata = json.decode(result[1].metadata)
+            }
+        else
+            -- No data found for the given identifier
+            return nil
+        end
+    end
+end
 
 function B1.getPlayers()
     if B1.core == 'qb-core' then
@@ -24,7 +93,7 @@ end
 ---@param reason string
 function B1.addMoney(source, moneyType, amount, reason)
     if not reason then reason = 'unknown' end
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     local addedMoney = false
     local types = {
         ['cash'] = {
@@ -59,7 +128,7 @@ end
 ---@param reason string
 function B1.removeMoney(source, moneyType, amount, reason)
     if not reason then reason = 'unknown' end
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     local removedMoney = false
     local types = {
         ['cash'] = {
@@ -91,7 +160,7 @@ end
 ---@param source any
 ---@param moneyType any
 function B1.getMoney(source, moneyType)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     local types = {
         ['cash'] = {
             ['qb-core'] = 'cash',
@@ -118,7 +187,7 @@ end
 ---@param amount any
 function B1.setMoney(source, moneyType, amount)
     if not reason then reason = 'unknown' end
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     local types = {
         ['cash'] = {
             ['qb-core'] = 'cash',
@@ -141,7 +210,7 @@ end
 
 ---@param source number
 function B1.getLicences(source)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local licences = Player.PlayerData.metadata['licences']
         return licences or false
@@ -155,7 +224,7 @@ end
 ---@param source number
 ---@param licenseType string
 function B1.getLicence(source, licenseType)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local licences = Player.PlayerData.metadata['licences']
         return licences[licenseType] or false
@@ -169,7 +238,7 @@ end
 ---@param source number
 ---@param licenseType string
 function B1.addLicence(source, licenseType)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local licences = Player.PlayerData.metadata['licences']
         licences[licenseType] = true
@@ -186,7 +255,7 @@ end
 ---@param source number
 ---@param licenseType string
 function B1.removeLicence(source, licenseType)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local licences = Player.PlayerData.metadata['licences']
         licences[licenseType] = false
@@ -202,7 +271,7 @@ end
 
 ---@param source number
 function B1.getCitizenId(source)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local citizenid = Player.PlayerData.citizenid
         return citizenid
@@ -215,7 +284,7 @@ end
 
 ---@param source number
 function B1.getPlayerName(source)
-    local Player = B1.getPlayer(source)
+    local Player = B1.getCorePlayer(source)
     if B1.core == 'qb-core' then
         local player_name = Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname
         return player_name

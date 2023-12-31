@@ -4,7 +4,7 @@
 function B1.updateNeed(need, type, amount)
     local source = source
     if B1.core == 'qb-core' then
-        local Player = B1.getPlayer(source)
+        local Player = B1.getCorePlayer(source)
         local defaultValue = Player.Functions.GetMetaData(need)
         local newValue = amount
         if type == 'add' then newValue = defaultValue + amount
