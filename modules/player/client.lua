@@ -139,6 +139,18 @@ function B1.getLicence(licenseType)
     return license
 end
 
+function B1.isPlayerDead()
+    if B1.core == 'qb-core' then
+        local playerdata = B1.getCorePlayerData()
+        return {
+            isDead = playerdata.metadata["isdead"],
+            isLastStand = playerdata.metadata["islaststand"],
+        }
+    elseif B1.core == 'esx' then
+        return CoreObject.PlayerData.dead
+    end
+end
+
 local notifyTypeMap = {
     ["info"] = { esx = "info", qb = "primary", oxlib = "inform" },
     ["success"] = { esx = "success", qb = "success", oxlib = "success" },
