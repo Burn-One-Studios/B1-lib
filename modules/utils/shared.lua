@@ -5,9 +5,9 @@ for i = 48, 57 do NumberCharset[#NumberCharset + 1] = string.char(i) end
 for i = 65, 90 do StringCharset[#StringCharset + 1] = string.char(i) end
 for i = 97, 122 do StringCharset[#StringCharset + 1] = string.char(i) end
 
----@param type string | number 'success' (1), 'warning' (2), 'error' (3), 'info' (4)
----@param message string The message to log.
-function B1.log(type, message)
+---@param logType string | number 'success' (1), 'warning' (2), 'error' (3), 'info' (4)
+---@param message string | table The object to log
+function B1.log(logType, message)
     local callingResource = GetInvokingResource()
     local printTypes = {
         [1] = {
@@ -35,20 +35,39 @@ function B1.log(type, message)
             printer = function(content) print(content) end,
         },
     }
-
-    -- If type is a string, find the corresponding index
-    if type(type) == 'string' then
+    -- If logType is a string, find the corresponding index
+    if type(logType) == 'string' then
         for index, printType in ipairs(printTypes) do
-            if printType.name == type then
-                type = index
+            if printType.name == logType then
+                logType = index
                 break
             end
         end
     end
-
-    local finalMessage = '[' .. printTypes[type].label .. ']' .. printTypes[type].color .. message .. ' ^0'
-    printTypes[type].printer(finalMessage)
+    -- Check if message is a table
+    if type(message) == 'table' then
+        local function tableToString(tbl, indent)
+            local str = "{\n"
+            for k, v in pairs(tbl) do
+                str = str .. string.rep("  ", indent) .. k .. " = "
+                if type(v) == "table" then
+                    str = str .. tableToString(v, indent + 1)
+                else
+                    str = str .. tostring(v) .. ",\n"
+                end
+            end
+            return str .. string.rep("  ", indent - 1) .. "}\n"
+        end
+        message = tableToString(message, 1)
+    end
+    local line = string.rep('=', #message)
+    local finalMessage = line .. '\n[' .. printTypes[logType].label .. ']' .. printTypes[logType].color .. message .. ' ^0\n' .. line
+    if logType == 3 then
+        finalMessage = finalMessage .. '\n' .. debug.traceback()
+    end
+    printTypes[logType].printer(finalMessage)
 end
+
 
 ---@param length number The length of the string to generate
 function B1.randomStr(length)
