@@ -116,6 +116,17 @@ function B1.firstToUpper(value)
     return (value:gsub("^%l", string.upper))
 end
 
+--- Creates a shallow copy of a table.
+--- @param tbl table The table to copy.
+--- @return table The copied table.
+function B1.copyTable(tbl)
+    local copy = {}
+    for k, v in pairs(tbl) do
+        copy[k] = v
+    end
+    return copy
+end
+
 ---@param value number The number to round
 ---@param numDecimalPlaces number The number of decimal places to round to
 function B1.round(value, numDecimalPlaces)
