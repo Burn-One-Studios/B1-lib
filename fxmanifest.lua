@@ -18,9 +18,9 @@ files {
     'imports/**/shared.lua',
 }
 
-shared_script 'modules/init.lua'
 shared_scripts {
-    '@es_extended/imports.lua',
+    --'@es_extended/imports.lua',
+    'modules/init.lua',
     'Config.lua',
     'modules/**/shared.lua',
 }
