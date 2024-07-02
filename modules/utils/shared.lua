@@ -109,6 +109,7 @@ end
 ---@param charset string The charset to keep in the string
 ---@return string
 function B1.sanitizeString(inputString, charset)
+    if not charset or charset == "" then charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' end
     local result = ""
     for i = 1, #inputString do
         local char = inputString:sub(i, i)
