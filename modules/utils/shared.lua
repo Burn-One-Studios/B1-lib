@@ -104,6 +104,44 @@ function B1.splitStr(str, delimiter)
     return result
 end
 
+
+---@param inputString string The string to sanitize
+---@param charset string The charset to keep in the string
+---@return string
+function B1.sanitizeString(inputString, charset)
+    local result = ""
+    for i = 1, #inputString do
+        local char = inputString:sub(i, i)
+        if string.find(charset, char, 1, true) then
+            result = result .. char
+        end
+    end
+    return result
+end
+
+---@param string string The string to remove characters from
+---@param charset string The charset to remove from the string
+---@return string
+function B1.removeChars(string, charset)
+    if not charset or charset == "" then charset = '!@#$%^&*()_+=-~' end
+    local result = ""
+    for i = 1, #string do
+        local char = string:sub(i, i)
+        local found = false
+        for j = 1, #charset do
+            if char == charset:sub(j, j) then
+                found = true
+                break
+            end
+        end
+        if not found then
+            result = result .. char
+        end
+    end
+    return result
+end
+
+
 ---@param value string The string to trim
 function B1.trim(value)
     if not value then return nil end
