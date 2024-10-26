@@ -21,12 +21,11 @@ cache = {
 if GetResourceState('qb-core') == 'started' then
     B1.core = 'qb-core'
     CoreObject = exports['qb-core']:GetCoreObject()
-    RegisterNetEvent('QBCore:Client:UpdateObject', function()
-        CoreObject = exports['qb-core']:GetCoreObject()
-    end)
+    print('^2B1-lib: Using QBCore^7')
 elseif GetResourceState('es_extended') == 'started' then
     B1.core = 'esx'
     CoreObject = exports['es_extended']:getSharedObject()
+    print('^2B1-lib: Using ESX^7')
 end
 
 if GetResourceState('ox_inventory') == 'started' then
