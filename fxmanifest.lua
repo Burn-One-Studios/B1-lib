@@ -1,39 +1,127 @@
 fx_version 'cerulean'
 game 'gta5'
-use_experimental_fxv2_oal 'yes'
-lua54 'yes'
 
-author 'B1 Lib'
-description 'A library for FiveM developers to make their life easier when using QBCore & ESX.'
+author 'b1-lib'
+description 'Small, easy-to-use FiveM library'
 version '1.0.0'
 
+-- Dependencies
 dependencies {
-	'/server:5848',
-    '/onesync',
+    'oxmysql'
 }
 
-files {
-    'init.lua',
-    'imports/**/client.lua',
-    'imports/**/shared.lua',
+-- Optional dependencies
+optional_dependencies {
+    'ox_inventory',
+    'ox_lib',
+    'ZSX_UIV2'
 }
 
+-- Shared files
 shared_scripts {
-    --'@es_extended/imports.lua',
-    'modules/init.lua',
-    'Config.lua',
-    'modules/**/shared.lua',
+    'config.lua',
+    'module/core/shared.lua',
+    'module/log/shared.lua',
+    'module/utils/shared.lua',
+    'module/ui/shared.lua'
 }
 
-client_scripts {
-    'imports/callbacks/client.lua',
-    'modules/**/client.lua',
-    'modules/**/client/*.lua'
-}
-
+-- Server files
 server_scripts {
-    '@oxmysql/lib/MySQL.lua',
-    'imports/callbacks/server.lua',
-    'modules/**/server.lua',
-    'modules/**/server/*.lua',
+    'module/db/server.lua',
+    'module/player/server.lua',
+    'module/vehicle/server.lua',
+    'module/inventory/server.lua'
+}
+
+-- Client files
+client_scripts {
+    'module/player/client.lua',
+    'module/vehicle/client.lua'
+}
+
+-- Exports
+exports {
+    -- Core
+    'getB1Object',
+    
+    -- Logger
+    'log',
+    'set_log_level',
+    'get_log_level',
+    
+    -- Utils
+    'randomStr',
+    'randomInt',
+    'splitStr',
+    'sanitizeString',
+    'removeChars',
+    'trim',
+    'firstToUpper',
+    'round',
+    'getCoreName',
+    'getInventoryName',
+    'getCoreObject',
+    'getNotificationSystem',
+    'getProgressBarSystem',
+    'getSkillCheckSystem',
+    
+    -- UI (client only)
+    'notify',
+    'progressBar',
+    'skillCheck',
+    'removeNotification',
+    
+    -- UI (server to client)
+    'notifyServer',
+    
+    -- DB (server only)
+    'db_query',
+    'db_single',
+    'db_scalar',
+    'db_insert',
+    'db_update',
+    'orm_define',
+    
+    -- Player (server)
+    'getCorePlayer',
+    'getPlayerByIdentifier',
+    'getOfflinePlayerByIdentifier',
+    'getPlayers',
+    'addMoney',
+    'removeMoney',
+    'getMoney',
+    'setMoney',
+    'getLicences',
+    'getLicence',
+    'addLicence',
+    'removeLicence',
+    'getCitizenId',
+    'getPlayerName',
+    
+    -- Player (client)
+    'getCorePlayerData',
+    'getPlayerData',
+    'getPlayerJob',
+    'getPlayerGang',
+    'getPlayerMoney',
+    'getPlayerName',
+    'getCitizenId',
+    
+    -- Vehicle (server)
+    'spawnVehicle',
+    'getPlate',
+    'getVehicleLabel',
+    
+    -- Vehicle (client)
+    'spawnVehicle',
+    'getPlate',
+    'getVehicleLabel',
+    
+    -- Inventory (server)
+    'inv_add',
+    'inv_remove',
+    'inv_can_carry',
+    'inv_get',
+    'inv_search'
 }
